@@ -1,7 +1,9 @@
-#include <string>
+﻿#include <string>
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <stdlib.h>
+#include <cstring>
 
 using namespace std;
 
