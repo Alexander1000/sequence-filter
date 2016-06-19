@@ -14,9 +14,14 @@ class FilterSequence
 
         bool filter(int size, int* intSequence) {
             switch (this->filterCode(this->filterParams[0])) {
-                // key: -s
+                // key -d [count] [diff]
+                case 11620: {
+                    return this->filterDiff(size, intSequence, atoi(this->filterParams[1]), atoi(this->filterParams[2]));
+                }
+
+                // key: -s [count]
                 case 11635: {
-                    return this->sequenceOfN(size, atoi(this->filterParams[1]), intSequence);
+                    return this->filterDiff(size, intSequence, atoi(this->filterParams[1]), 1);
                 }
             }
 
@@ -36,7 +41,15 @@ class FilterSequence
             return result;
         }
 
-        bool sequenceOfN(int size, int count, int* sequence) {
+        /**
+         * Фильтруект последовательность чисел
+         * @param int size - количество элементов в последовательности
+         * @param int* sequence - указатель на последовательность
+         * @param int count - количество элементов должно быть
+         * @param int diff - какой должна быть разница между двумя соседними элементами
+         */
+        bool filterDiff(int size, int* sequence, int count, int diff)
+        {
             bool test = false;
             bool subTest = false;
 
@@ -44,7 +57,7 @@ class FilterSequence
                 subTest = true;
 
                 for (int j = 0; j < count; ++j) {
-                    if (sequence[i] - sequence[i + j] != -j) {
+                    if (sequence[i] - sequence[i + j] != - (j * diff)) {
                         subTest = false;
                         break;
                     }
